@@ -112,31 +112,3 @@ git ls-files | grep -E '(^|/)\.env$|runtime-data/'
 
 正常情况下只会看到可公开的 `runtime-data/README.md`，不会看到 `.env` 或运行数据。
 
-## 上传到 GitHub
-
-先在 GitHub 创建一个空仓库（不要勾选自动生成 README、License 或 `.gitignore`），然后在项目目录执行：
-
-```bash
-git init
-git branch -M main
-git config user.name "你的 GitHub 用户名"
-git config user.email "你的 GitHub 邮箱"
-git add .
-git commit -m "Initial public release"
-git remote add origin https://github.com/你的用户名/你的仓库名.git
-git push -u origin main
-```
-
-如果 GitHub 邮箱需要隐藏，请先在 GitHub 的 Email 设置中启用隐私邮箱，再修改本仓库的 `user.email` 后提交。
-
-## 已知边界
-
-- 当前以单实例 SQLite 和进程内 Worker 为核心，不是分布式多租户平台；
-- Qdrant 集合维度由 Embedding 模型决定，切换模型后应重建集合；
-- Citation 校验保证编号对应 Evidence，但不等同于逐句事实蕴含证明；
-- 联网搜索未配置或不可用时会有限重试并明确降级；
-- 首次启动需要下载镜像和本地 Embedding 模型，耗时取决于网络环境。
-
-## License
-
-当前仓库尚未附带开源许可证。公开发布前请根据使用目的选择并添加合适的 `LICENSE`。
