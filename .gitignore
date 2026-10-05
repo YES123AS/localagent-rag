@@ -1,0 +1,48 @@
+# Local secrets and runtime state
+.env
+.env.*
+!.env.example
+runtime-data/*
+!runtime-data/README.md
+data/
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.deepeval/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Tests and local evaluation output are intentionally excluded from this release
+tests/
+coverage.xml
+.coverage
+htmlcov/
+
+# Logs, databases, vector indexes, and generated artifacts
+*.log
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.faiss
+*.index
+*.pkl
+*.pickle
+
+# Presentations and office temporary files
+*.ppt
+*.pptx
+*.odp
+~$*
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini

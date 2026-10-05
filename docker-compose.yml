@@ -1,0 +1,40 @@
+services:
+  phoenix:
+    image: arizephoenix/phoenix:latest
+    ports:
+      - "6006:6006"
+    environment:
+      PHOENIX_HOST: 0.0.0.0
+      PHOENIX_PORT: "6006"
+    volumes:
+      - ./runtime-data/phoenix:/root/.phoenix
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "7333:6333"
+    volumes:
+      - ./runtime-data/qdrant:/qdrant/storage
+    restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - ./runtime-data/.env
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      CONVERSATION_DB_PATH: /app/data/localagent.db
+      RUNTIME_CACHE_PATH: /app/data/runtime-cache.db
+      PHOENIX_COLLECTOR_ENDPOINT: http://phoenix:6006
+    depends_on:
+      phoenix:
+        condition: service_started
+      qdrant:
+        condition: service_started
+    volumes:
+      - ./runtime-data/app:/app/data
+      - ./runtime-data/model-cache:/root/.cache/huggingface
+    restart: unless-stopped

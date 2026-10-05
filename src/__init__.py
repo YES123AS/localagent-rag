@@ -1,0 +1,1 @@
+"""LocalRAG application package."""
